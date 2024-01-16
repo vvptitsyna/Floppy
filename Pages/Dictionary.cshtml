@@ -1,0 +1,43 @@
+﻿@page 
+@model Floppy.Pages.DictionaryModel
+@{
+}
+
+
+<div class="main_block">
+
+    @{
+        <table>
+                    <tr class="choose_button">
+                        <td> <a asp-page="Dictionary" asp-page-handler="Current">На изучении &nbsp;</a> <h1>@ViewData["Count"]</h1> </td>
+                        <td> <a asp-page="Dictionary" asp-page-handler="Learned">Изучено &nbsp;</a> <h1>@ViewData["LearnCount"]</h1> </td>
+                    </tr>
+       </table>
+    }
+
+    <div class="dictionary">
+        @{
+            foreach (var word in Model.Words)
+            {
+                <div class="word_card">
+                    <div class="about_words">
+                        <div class="trans">
+                            <h3 class="word_name">@word.Name —</h3>
+                            <h4 class="word_translation">@word.Translation</h4>
+                        </div>
+                        <h4 class="word_sentence">@word.Sentence</h4>
+                        @if(!(bool)ViewData["Learned"]){
+                            <form method="post">
+                                <button class="button_words" name="wordid" value="@word.Id" type="submit">Перенести в изученные</button>
+                            </form>
+                        }
+                    </div>
+                    <div class="block_img">
+                        <img class="word_img" src="~/img/words/@word.Image" />
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+

@@ -1,0 +1,91 @@
+﻿@page
+@model Floppy.Pages.LessonWordsModel
+
+ <div class="lessontask_block">
+        <progress id="progress_bar" value="100/@Model.Count" min="0" max="100"></progress>
+
+        @{
+            int i = 1;
+            foreach (var word in Model.Words)
+            {
+                <style>
+                #word_@i {
+                    position: absolute;
+                    top: 5vh;
+                    width: 50vw;
+                    margin-top: 1vw;
+                    height: 30vh;
+                    display: none;
+                    animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                }
+                </style>
+                i++;
+            }
+
+        }
+
+        @{ int j = 1;
+            foreach (var word in Model.Words)
+            {
+                if (j == 1)
+                {
+                    <style>
+                    #word_@j {
+                    position: absolute;
+                    top: 5vh;
+                    width: 50vw;
+                    height: 30vh;
+                    display: block;
+                    animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                    </style>
+                };
+
+                <div id="word_@j">
+                    <div class="word_name_lesson">
+                        <h2>@word.Translation</h2>
+                    </div>
+
+                    <div class="word_translation_lesson">
+                        <h1>@word.Name</h1>
+                    </div>
+
+                    <div class="word_image_lesson">
+                        <img src="~/img/words/@word.Image" />
+                    </div>
+                </div>
+                j++;
+            }
+
+        }
+
+
+        <button id="next" onclick="next()"><span>Далее</span></button>
+        <form method="post">
+            <button id="end_btn" value="@Model.LessonId" name="lessonId" asp-page="LessonWords" asp-page-handler="Complete"><span>Завершить</span></button>
+        </form>
+
+
+    </div>
+
+    <script>
+        var element = 'word_';
+        var btn = document.getElementById('next');
+        var i = 1;
+        function next() {
+            if (i< @Model.Count)
+            {
+                document.getElementById(element + i).style.display = "none";
+                i = i + 1;
+                document.getElementById(element + i).style.display = "block";
+                document.getElementById('progress_bar').value = document.getElementById('progress_bar').value + 100/@Model.Count;
+                if (i == @Model.Count)
+                    end();
+            }
+        };
+        function end() {
+            btn.style.display = "none";
+            btn = document.getElementById('end_btn');
+            btn.style.display = "block";
+            document.getElementById('progress_bar').value = 100;
+        }
+    </script>

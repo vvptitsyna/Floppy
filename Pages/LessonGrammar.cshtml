@@ -1,0 +1,83 @@
+﻿@page
+@model Floppy.Pages.LessonGrammarModel
+        <div class="lessontask_block">
+            <progress id="progress_bar" value="0" min="0" max="100"></progress>
+            
+            @{  int i = 1;
+                foreach (var grammar in Model.Grammars)
+                {
+                    <style>
+                    #grammar_@i {
+ 
+                        width: 880px;
+                        display: none;
+                        animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                    }
+                    </style>
+                     i++;
+                }
+            }
+
+
+            @{ int j = 1;
+                foreach (var grammar in Model.Grammars)
+                {
+                    if (j == 1)
+                    {
+                        <style>
+                        #grammar_@j {
+                            
+                            width: 880px;
+                            display: block;
+                            animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                        }
+                        </style>
+                    }
+
+
+                    <div id="grammar_@j">
+                        <div class="grammar_theory">
+                            <h1>@Html.Raw(grammar.Theory)</h1>
+                        </div>
+                        @if(grammar.Example!=null)
+                        {
+                          <div class="grammar_example">
+                            <h2>@Html.Raw(@grammar.Example)</h2>
+                          </div>
+                        }
+                    </div>
+                    j++;
+                }
+            }
+
+
+
+            <button id="next" onclick="next()"> <span> Далее</span> </button>
+
+            <form method="post">
+                <button id="end_btn" name="lessonId" value="@Model.LessonId" asp-page="LessonGrammar" asp-page-handler="Complete"><span>Завершить</span></button>
+            </form>
+        </div>
+
+        <script>
+        var element = 'grammar_';
+        var btn = document.getElementById('next');
+        var i = 1;
+        function next() {
+            if (i< @Model.Count)
+            {
+                document.getElementById(element + i).style.display = "none";
+                i = i + 1;
+                document.getElementById(element + i).style.display = "block";
+                document.getElementById('progress_bar').value = document.getElementById('progress_bar').value + 100/@Model.Count;
+                if (i == @Model.Count)
+                    end();
+            }
+        };
+        function end() {
+            btn.style.display = "none";
+            btn = document.getElementById('end_btn');
+            btn.style.display = "block";
+            document.getElementById('progress_bar').value = 100;
+        }
+        </script>

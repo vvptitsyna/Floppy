@@ -1,0 +1,53 @@
+﻿@page 
+@model Floppy.Pages.StoriesModel
+
+    <div class="main_block">
+        <div class="story">
+
+            @{
+                if (!Model.Stories.Any())
+                {
+                    <div class="no_stories">
+                        <h1>У вас нет историй</h1>
+                        <div class="no_stories_button">
+                            <a style="color:white" asp-page="Store" asp-page-handler="Stories">Перейти в магазин</a>
+                        </div>
+                    </div>
+                }
+            }
+
+
+            
+
+
+            @{
+                foreach (var story in Model.Stories)
+                {
+                        <div class="card_story">
+                            <div class="about_story">
+
+                                <div class="image_story">
+                                    <img src="~/img/stories/@story.Image">
+                                </div>
+
+                                <div class="text_story">
+                                    <h2>@story.Title</h2>
+
+
+
+                                    <div class="description_story">
+                                        <p>@story.Description</p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <form method="post">
+                                <button type="submit" class="button_story" asp-page="ReadStory" name="id" value="@story.Id">Читать</button>
+                            </form>
+                        </div>
+                }
+            }
+
+        </div>
+    </div>

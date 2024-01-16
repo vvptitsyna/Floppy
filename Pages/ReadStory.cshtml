@@ -1,0 +1,19 @@
+﻿@page
+@model Floppy.Pages.ReadStoryModel
+
+
+ <div class="main_block main_readstory">
+        <div class="card_readstory">
+            <div class="text_readstory">
+                <h3>@Model.Story.Title</h3>
+                @Html.Raw(Model.Story.Tale)
+            </div>
+        </div>
+
+        <div class="card_readstory">
+            <div class="text_readstory">
+                <h3>Перевод</h3>
+                @Html.Raw(Model.Story.Translation)
+            </div>
+        </div>
+</div>

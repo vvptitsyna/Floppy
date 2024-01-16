@@ -1,0 +1,38 @@
+﻿<html>
+
+<head>
+    <title>Floppy</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="~/css/reset.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/hystmodal.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="nav">
+            <ul>
+                <li><a asp-page="Lessons">ОБУЧЕНИЕ</a></li>
+                <li><a asp-page="Dictionary" asp-page-handler="Current">СЛОВАРЬ</a></li>
+                <li><a asp-page="Stories" asp-page-handler="">ИСТОРИИ</a></li>
+                <li><a asp-page="Store" asp-page-handler="Stories">МАГАЗИН</a></li>
+            </ul>
+        </div>
+        <div style="margin-right:25px" class="nav">
+            <div class="person">
+            <a>@HttpContextAccessor.HttpContext.Session.GetString("Money")</a>
+                <a href="#">@User.Identity.Name</a>
+            </div>
+            <div class="submenu">
+                <div class="sub_item"><a asp-page="FAQ">FAQ</a></div>
+                <div class="sub_item"><a asp-page="Lessons" asp-page-handler="Exit">ВЫХОД</a></div>
+            </div>
+        </div>
+    </header>
+
+        @RenderBody()
+</body>
+
+</html>

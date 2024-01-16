@@ -1,0 +1,135 @@
+﻿@page
+@model Floppy.Pages.LessonExerciseModel
+
+<div class="lessontask_block">
+        <progress id="progress_bar" value="@Model.Count/100" min="0" max="100"></progress>
+        @{ int i = 1;
+            foreach (var example in Model.Exercises)
+            {
+            <style>
+                #example_@i {
+                    width: 880px;
+                    display: none;
+                    animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                }
+            </style>
+             i++;
+                }
+            }
+
+        @{
+            int id = 1;
+            int j = 1;
+            int f = 1;
+            foreach (var example in Model.Exercises)
+            {
+
+                if (f == 1)
+                {
+                    <style>
+                        #example_@f {
+                            width: 880px;
+                            display: block;
+                            animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                        }
+                    </style>
+                }
+
+                <div id="example_@f">
+
+                    <div class="example_name">
+                        <h2>@Html.Raw(example.Question)</h2>
+                    </div>
+
+                    <div class="example_translation">
+                        <form class="lesson_test">
+                            <a id="choice_@(j)_1" value="1" onclick="check(1,@example.CorrectAnswer,@id)" href="#"> @example.Answer1</a>
+                            <a id="choice_@(++j)" value="2" onclick="check(2,@example.CorrectAnswer,@id)" href="#"> @example.Answer2</a>
+                            <a id="choice_@(++j)" value="3" onclick="check(3,@example.CorrectAnswer,@id)" href="#"> @example.Answer3</a>
+                            <a id="choice_@(++j)" value="4" onclick="check(4,@example.CorrectAnswer,@id)" href="#"> @example.Answer4</a>
+                        </form>
+                    </div>
+                </div>
+                id +=3;
+                f++;
+            }
+
+        }
+
+        <button style="background-color:gray" disabled="disabled" id="next" onclick="next()"><span>Далее</span></button>
+        <form method="post">
+            <button name="correctanswers" id="end_btn" value="0" asp-page-handler="Complete" asp-page="LessonExercise"><span>Завершить</span></button>
+            <input  style="display:none" name="lessonId" value="@Model.LessonId" />
+        </form>
+
+    </div>
+
+    <script>
+        var element = 'example_';
+        var btn = document.getElementById('next');
+        var endbut = document.getElementById('end_btn');
+        var i = 1;
+        var num = 1;
+        function next() {
+            if (i< @Model.Count)
+            {
+                document.getElementById(element + i).style.display = "none";
+                i = i + 1;
+                document.getElementById(element + i).style.display = "block";
+                document.getElementById('progress_bar').value = document.getElementById('progress_bar').value + 100/@Model.Count;
+                if (i == @Model.Count)
+                    end();
+            }
+            btn.disabled="disabled";
+            btn.style="background-color:gray";
+        };
+        function end() {
+            btn.style.display = "none";
+            endbut.style.display = "block";
+            endbut.disabled="disabled";
+            document.getElementById('progress_bar').value = 100;
+        }
+        function check(answer,correctanswer,id)
+        {
+            btn.disabled="";
+            endbut.disabled="";
+            btn.style="background-color:#7F7DF9";
+            var ch1 = document.getElementById('choice_'+(id)+'_1');
+            var ch2 = document.getElementById('choice_'+(id+1));
+            var ch3 = document.getElementById('choice_'+(id+2));
+            var ch4 = document.getElementById('choice_'+(id+3));
+            if (correctanswer == 1) {
+                ch1.style.color = "#46DB6F";
+                ch2.style.color = "#E93D3D";
+                ch3.style.color = "#E93D3D";
+                ch4.style.color = "#E93D3D";
+            }
+            else if (correctanswer == 2) {
+                ch1.style.color = "#E93D3D";
+                ch2.style.color = "#46DB6F";
+                ch3.style.color = "#E93D3D";
+                ch4.style.color = "#E93D3D";
+            }
+            else if (correctanswer == 3) {
+                ch1.style.color = "#E93D3D";
+                ch2.style.color = "#E93D3D";
+                ch3.style.color = "#46DB6F";
+                ch4.style.color = "#E93D3D";
+            }
+            else {
+                ch1.style.color = "#E93D3D";
+                ch2.style.color = "#E93D3D";
+                ch3.style.color = "#E93D3D";
+                ch4.style.color = "#46DB6F";
+            }
+            ch1.onclick = "";
+            ch2.onclick = "";
+            ch3.onclick = "";
+            ch4.onclick = "";
+            if (answer == correctanswer)
+                {   
+                    endbut.value = num;
+                    num = num + 1;
+                }
+        }
+    </script>

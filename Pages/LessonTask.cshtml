@@ -1,0 +1,71 @@
+﻿@page
+@model Floppy.Pages.LessonTaskModel
+@{
+}
+ <div class="task_block">
+        <div class="Task">
+            <h2>Слова</h2>
+            <div class="img_task">
+                <img src="~/img/lesson/shape1.svg" />
+            </div> 
+            <form method="post">
+                <button name="lessonid" class="button_task" type="submit" value="@Model.Id" asp-page="LessonWords">Начать</button>
+            </form>  
+        </div>
+
+
+        <div class="Task">
+            <h2>Грамматика</h2>
+            <div class="img_task">
+                <img src="~/img/lesson/shape2.svg" />
+            </div>
+        @{
+                if (Model.Id < Model.Current)
+                {
+                     <form method="post">
+                            <button name="lessonId" class="button_task" type="submit" value="@Model.Id"  asp-page="LessonGrammar">Начать</button>
+                        </form>
+                }
+                else if (!Model.Progress.WordsComplete)
+                {
+                    <form>
+                        <button disabled="disabled" class="button_task">Начать</button>
+                    </form>
+                }
+                else
+                {
+                    <form method="post">
+                        <button name="lessonId" class="button_task" type="submit" value="@Model.Id"  asp-page="LessonGrammar">Начать</button>
+                    </form>
+                }
+            }
+        </div>
+
+
+        <div class="Task">
+            <h2>Упражнения</h2>
+            <div class="img_task">
+                <img src="~/img/lesson/shape3.svg" />
+            </div>
+            @{
+                if (Model.Id < Model.Current)
+                {
+                     <form method="post">
+                        <button name="lessonId" class="button_task" type="submit" value="@Model.Id"  asp-page="LessonExercise">Начать</button>
+                    </form>
+                }
+                else if (!Model.Progress.GrammarComplete)
+                {
+                    <form>
+                        <button disabled="disabled" class="button_task">Начать</button>
+                    </form>
+                }
+                else
+                {
+                    <form method="post">
+                        <button name="lessonId" class="button_task" type="submit" value="@Model.Id"  asp-page="LessonExercise">Начать</button>
+                    </form>
+                }
+            }
+        </div>
+</div>

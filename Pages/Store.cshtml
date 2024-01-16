@@ -1,0 +1,109 @@
+﻿@page 
+@model Floppy.Pages.StoreModel
+
+@if(Model.IsStories)
+{
+<div class="animation_block">
+
+        <table>
+            <tr class="choose_button">
+                <td> <a asp-page="Store" asp-page-handler="Stories">Истории</a></td>
+                <td> <a asp-page="Store" asp-page-handler="Words">Наборы слов</a></td>
+            </tr>
+        </table>
+
+        <div class="main_block">
+
+
+            <div class="store">
+                @{
+                    foreach (var story in Model.Stories)
+                    {
+                                <div class="card_story">
+                                    <div class="about_story">
+
+                                        <div class="image_story">
+                                            <img src="~/img/stories/@story.Image">
+                                        </div>
+
+                                        <div class="text_story">
+                                            <h2>@story.Title</h2>
+
+                                            <div class="description_story">
+                                                <p>@story.Description</p>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    @if (story.Price > Model.Balance)
+                                    {
+                                        <form method="post">
+                                            <button  disabled="disabled" class="button_story">Необходимо @story.Price монет</button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form method="post">
+                                            <button type="submit" class="button_story" name="id" asp-page="Store" asp-page-handler="Story" value="@story.Id">Купить за @story.Price монет</button>
+                                        </form>
+                                    }
+
+                                </div>
+                        }
+
+                    }
+
+            </div>
+        </div>
+</div>
+}
+else
+{
+     <div class="animation_block">
+        <table>
+            <tr class="choose_button">
+                <td> <a asp-page="Store" asp-page-handler="Stories">Истории</a></td>
+                <td> <a asp-page="Store" asp-page-handler="Words">Наборы слов</a></td>
+            </tr>
+        </table>
+
+        <div class="main_block">
+            <div class="store">
+                @{
+                    foreach (var wordSet in Model.Wordsets)
+                    {
+                            <div class="word_card">
+
+                                      <div>
+                                          <img  class="image_story_words" src="~/img/wordsets/@wordSet.Image" />
+                                       </div>
+
+                                      <div class="about_words_store">
+                                          <div>
+                                              <p>Набор слов: @wordSet.Name</p>
+                                              <p>Цена:@wordSet.Price</p>
+                                          </div>
+                                         @if (wordSet.Price > Model.Balance)
+                                         {
+                                          <form method="post">
+                                              <button disabled ="disabled" class="button_wordset">Недостаточно монет</button>
+                                          </form>
+                                         }
+                                         else
+                                         {
+                                      <form method="post">
+                                          <button type="submit" class="button_wordset" name="id" asp-page="Store" asp-page-handler="WordSet" value="@wordSet.Id">Купить</button>
+                                      </form>
+                                         }
+                                      </div>
+
+                            </div>
+                                         
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+}

@@ -1,0 +1,196 @@
+﻿@page
+@model IndexModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Floppy</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="/css/hystmodal.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="nav_name">
+            <h2>
+                Floppy
+            </h2>
+        </div>
+        <div class="nav_buttons">
+            <a href="#" data-hystmodal="#myModal" class="button_registration">Регистрация</a>
+            <a href="#" data-hystmodal="#myModal1" class="button_login">Вход</a>
+        </div>
+    </header>
+   
+
+    <div class="error_container" asp-validation-summary="All"></div>
+
+    <main>
+        <div class="main_div">
+            <img src="~/img/index/index-main-figure.svg" class="main_figure" />
+            <img src="~/img/index/vector-main-woman.svg" class="main_women" />
+            <h1 class="main_text">Начните изучать английский язык с floppy прямо сейчас!</h1>
+        </div>
+        <a href="#aboutus"><img src="~/img/index/vector-main-down.svg" class="arrow" /></a>
+        <a id="aboutus"></a>
+    </main>
+
+    <div class="about">
+        <div class="about_blocks">
+            <img src="~/img/index/vector-free.svg" class="about_img" />
+            <h6>БЕСПЛАТНО</h6>
+            <p>Весь курс обучения абсолютно бесплатен</p>
+        </div>
+        <div class="about_blocks">
+            <img src="~/img/index/vector-economy.svg" class="about_img" />
+            <h6>БЫСТРО</h6>
+            <p>
+                Учитесь эффективно всего за 30 минут в день
+            </p>
+        </div>
+        <div class="about_blocks">
+            <img src="~/img/index/vector-personality.svg" class="about_img" />
+            <h6>ПЕРСОНАЛЬНО</h6>
+            <p>Все задания и упражнения подобраны лично для вас</p>
+        </div>
+    </div>
+
+
+    <div class="info_block">
+        <div class="info_text">
+            <h1>Игровая форма обучения!</h1>
+            <ul>
+                <li>Зарабатывай очки за изучение новой лексики и грамматики</li>
+                <li>Трать их на открытие специальных историй на английском языке</li>
+                <li>Открывай новые тематические разделы с лексикой</li>
+
+            </ul>
+        </div>
+
+        <div class="info_img">
+            <img src="~/img/index/info-block1.svg" />
+        </div>
+    </div>
+
+    <div class="info_block2">
+        <div class="info_text">
+            <h1>Легко отслеживать свой прогресс!</h1>
+            <p>Система достижений и чек-лист тем поможет тебе узнать, насколько ты продвинулся в изучении английского языка.</p>
+        </div>
+
+        <div class="info_img">
+            <img src="~/img/index/info-block2.svg" />
+        </div>
+    </div>
+
+    <div class="info_block">
+        <div class="info_text">
+            <h1>Ты еще не с нами?</h1>
+            <p>Присоединяйся!</p>
+            <a href="#" data-hystmodal="#myModal" class="button_registration">Регистрация</a>
+        </div>
+
+        <div class="info_img">
+            <img src="~/img/index/info-block3.svg" />
+        </div>
+    </div>
+
+
+    <script>
+        const anchors = document.querySelectorAll('a[href="#aboutus"]')
+
+        for (let anchor of anchors) {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault()
+
+                const blockID = anchor.getAttribute('href').substr(1)
+
+                document.getElementById(blockID).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                })
+            })
+        }
+    </script>
+    <!-------------------------------------------------------------МОДАЛЬНОЕ ОКНО С АВТОРИЗАЦИЕЙ------------------------>
+
+    <div class="hystmodal" id="myModal" aria-hidden="true">
+        <div class="hystmodal__wrap">
+            <div class="hystmodal__window" role="dialog" aria-modal="true">
+                <button data-hystclose class="hystmodal__close">Закрыть</button>
+                <h2>
+                    РЕГИСТРАЦИЯ
+                </h2>
+                <form class="field_registration" method="post" asp-page="Index" asp-page-handler="Register">
+
+                    <div>
+                        <label for="name">Логин</label>
+                        <input type="text" name="login" maxlength="32" placeholder="Введите логин" required>
+                    </div>
+
+                    <div>
+                        <label for="email">Email</label>
+                        <input type="email" name="email" maxlength="32" placeholder="Введите email" required />
+                    </div>
+
+                    <div>
+                        <label for="password">Пароль</label>
+                        <input type="password" name="password" maxlength="32" placeholder="Введите пароль" required>
+                    </div>
+
+                    <div>
+                        <label for="password">Повторите пароль</label>
+                        <input type="password" name="confirmpassword" maxlength="32" placeholder="Повторите пароль" required>
+                    </div>
+
+                    <button type="submit">Зарегестрироваться</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="hystmodal" id="myModal1" aria-hidden="true">
+        <div class="hystmodal__wrap">
+            <div class="hystmodal__window" role="dialog" aria-modal="true">
+                <button data-hystclose class="hystmodal__close">Закрыть</button>
+                <h2>
+                    ВХОД
+                </h2>
+                <form class="field_registration" method="post" asp-page="Index" asp-page-handler="Login">
+                    <div>
+                        <label for="name">Логин или email</label>
+                        <input type="text" name="login" maxlength="32" placeholder="Введите логин" required />
+                    </div>
+
+                    <div>
+                        <label for="password">Пароль</label>
+                        <input type="password" name="password" maxlength="32" placeholder="Введите пароль" required>
+                    </div>
+
+                    <button type="submit">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/hystmodal.min.js"></script>
+
+    <script>
+        const myModal = new HystModal({
+            linkAttributeName: "data-hystmodal",
+        });
+    </script>
+
+</body>
+
+</html>
